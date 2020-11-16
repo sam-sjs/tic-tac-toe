@@ -11,7 +11,7 @@ let tableSize = 3;
 const victory = function() {
   let inARow = [];
   let correctCount = 1;
-  //check columns
+  //check rows
   for(let i = 1; i < tableSize + 1; i++) {
     for(let j = 1; j < tableSize + 1; j++) {
       const cellValue = $('#' + i + '_' + j).html();
@@ -27,7 +27,7 @@ const victory = function() {
       correctCount = 1;
     };
   };
-  //check rows
+  //check columns
   for(let i = 1; i < tableSize + 1; i++) {
     for(let j = 1; j < tableSize + 1; j++) {
       const cellValue = $('#' + j + '_' + i).html();
@@ -43,7 +43,33 @@ const victory = function() {
       correctCount = 1;
     };
   };
-}
+  //check diagonals
+  for(let i = 1; i < tableSize + 1; i++) {
+    const cellValue = $('#' + i + '_' + i).html();
+    inARow.push(cellValue);
+    if(i > 1 && inARow[i - 1] === inARow[i - 2] && inARow[0] !== "") {
+      correctCount++;
+    };
+  };
+  inARow = [];
+  if(correctCount === tableSize) {
+    return console.log('Victory!');
+  } else {
+    correctCount = 1;
+  };
+  for(let i = 1; i < tableSize + 1; i++) {
+    const cellValue = $('#' + (tableSize - i + 1) + '_' + i).html();
+    inARow.push(cellValue);
+    if(i > 1 && inARow[i - 1] === inARow[i - 2] && inARow[0] !== "") {
+      correctCount++;
+    };
+  };
+  if(correctCount === tableSize) {
+    return console.log('Victory!');
+  } else {
+    correctCount = 1;
+  };
+}//victory()
 
 
 
