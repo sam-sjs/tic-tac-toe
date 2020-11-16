@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap');
+
+body {
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid red;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  width: 600px;
+  height: 600px;
+  margin: 0 auto;
+  background-color: darkgrey;
+  color: white;
+  border: 5px solid black;
+}
+
+.checkSquares {
+  border: 5px solid black;
+  font-size: 7em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Comic Neue', cursive;
+  font-weight: bold;
+  cursor: pointer;
+}
