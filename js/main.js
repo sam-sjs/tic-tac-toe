@@ -7,32 +7,37 @@ let stateCount = 0;
 let tableSize = 5;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
 
+  const $outputField = $('#playerIO p');
+  const $gridContainer = $('.gridContainer');
+  const $textInput = $('#textInput');
+
   //---Request Board Size---
   const requestBoardSize = function() {
-    if(parseInt($('#textInput').val()) > 21 || parseInt($('#textInput').val()) < 3) {
-      tableSize = parseInt($('#textInput').val()) < 3 ? 3 : 21;
-      $('#playerIO p').html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn!`);
-    } else if(parseInt($('#textInput').val()) % 2 === 0) {
-      tableSize = parseInt($('#textInput').val()) + 1;
-      $('#playerIO p').html(`I said odd numbers! <br/> ${playerOne} it's your turn!`);
+    const $playerInput = parseInt($textInput.val());
+    if($playerInput > 21 || $playerInput < 3) {
+      tableSize = $playerInput < 3 ? 3 : 21;
+      $outputField.html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn!`);
+    } else if($playerInput % 2 === 0) {
+      tableSize = $playerInput + 1;
+      $outputField.html(`I said odd numbers! <br/> ${playerOne} it's your turn!`);
     } else {
-      tableSize = parseInt($('#textInput').val());
-      $('#playerIO p').html(`${playerOne} it's your turn!`);
+      tableSize = $playerInput;
+      $outputField.html(`${playerOne} it's your turn!`);
     }
   } //requestBoardSize()
 
 
   //---Set Board Size---
   const setBoardSize = function() {
-    $gridContainer = $('.gridContainer');
+    $gridSquares = $('.gridSquares');
     $gridContainer.css({gridTemplateRows: `repeat(${tableSize}, 1fr)`, gridTemplateColumns: `repeat(${tableSize}, 1fr)`});
     for(let i = 1; i <= tableSize; i++) {
       for(let j = 1; j <= tableSize; j++) {
-        const $newDiv = $(`<div id="${i}_${j}" class="checkSquares"></div>`)
+        const $newDiv = $(`<div id="${i}_${j}" class="gridSquares"></div>`)
         $gridContainer.append($newDiv);
       }
     }
-    $('.checkSquares').css('font-size', `${$('.checkSquares').height() * 0.7}px`);
+    $gridSquares.css('font-size', `${$gridSquares.height() * 0.7}px`);
   } //setBoardSize()
 
   //---Check Victory Conditions---
@@ -40,6 +45,7 @@ let tableSize = 5;
 
     let inARow = [];
     let correctCount = 1;
+
     //check rows
     for(let i = 1; i < tableSize + 1; i++) {
       for(let j = 1; j < tableSize + 1; j++) {
@@ -109,24 +115,25 @@ let tableSize = 5;
 
 
   // ---Set Names---
-  $('#textInput').keyup(function(e) {
+  $submitButton = $('#submitButton');
+  $textInput.keyup(function(e) {
     if(e.keyCode === 13) {
-      $('#submitButton').trigger('click');
+      $submitButton.trigger('click');
     }
   });
 
-  $('#submitButton').on('click', function() {
-    if($('#textInput').val() === '') {
+  $submitButton.on('click', function() {
+    if($textInput.val() === '') {
       return;
     } else if(stateCount === 0) {
-      playerOne = $('#textInput').val();
-      $('#textInput').val('');
-      $('#playerIO p').html('Player 2 - Enter your name');
+      playerOne = $textInput.val();
+      $textInput.val('');
+      $outputField.html('Player 2 - Enter your name');
       stateCount++;
     } else if(stateCount === 1) {
-      playerTwo = $('#textInput').val();
-      $('#textInput').val('');
-      $('#playerIO p').html('Enter a board size, odd numbers only!');
+      playerTwo = $textInput.val();
+      $textInput.val('');
+      $outputField.html('Enter a board size, odd numbers only!');
       stateCount++;
     } else {
       requestBoardSize();
@@ -136,19 +143,19 @@ let tableSize = 5;
   });
 
   //---Play Turns---
-  $('.gridContainer').on('click', '.checkSquares', function() {
+  $gridContainer.on('click', '.gridSquares', function() {
     if($(this).html() !== "") {
       return;
     } else if(stateCount % 2 === 0) {
       $(this).html('X');
       stateCount++
       victory();
-      $('#playerIO p').html(`${playerTwo} it's your turn!`);
+      $outputField.html(`${playerTwo} it's your turn!`);
     } else {
       $(this).html('O');
       stateCount++
       victory();
-      $('#playerIO p').html(`${playerOne} it's your turn!`);
+      $outputField.html(`${playerOne} it's your turn!`);
     }
   });
 

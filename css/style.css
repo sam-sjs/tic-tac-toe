@@ -22,7 +22,7 @@ body {
   border: 5px solid black;
 }
 
-.checkSquares {
+.gridSquares {
   border: 5px solid black;
   font-size: 7em;
   display: flex;
