@@ -29,15 +29,14 @@ let tableSize = 5;
 
   //---Set Board Size---
   const setBoardSize = function() {
-    $gridSquares = $('.gridSquares');
     $gridContainer.css({gridTemplateRows: `repeat(${tableSize}, 1fr)`, gridTemplateColumns: `repeat(${tableSize}, 1fr)`});
     for(let i = 1; i <= tableSize; i++) {
       for(let j = 1; j <= tableSize; j++) {
         const $newDiv = $(`<div id="${i}_${j}" class="gridSquares"></div>`)
         $gridContainer.append($newDiv);
       }
-    }
-    $gridSquares.css('font-size', `${$gridSquares.height() * 0.7}px`);
+    };
+    $('.gridSquares').css('font-size', `${$('.gridSquares').height() * 0.7}px`);
   } //setBoardSize()
 
   //---Check Victory Conditions---
