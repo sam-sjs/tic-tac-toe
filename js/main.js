@@ -7,6 +7,21 @@ let stateCount = 0;
 let tableSize = 5;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
 
+  //---Request Board Size---
+  const requestBoardSize = function() {
+    if(parseInt($('#playerName').val()) > 21 || parseInt($('#playerName').val()) < 3) {
+      tableSize = parseInt($('#playerName').val()) < 3 ? 3 : 21;
+      $('#setPlayers p').html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn!`);
+    } else if(parseInt($('#playerName').val()) % 2 === 0) {
+      tableSize = parseInt($('#playerName').val()) + 1;
+      $('#setPlayers p').html(`I said odd numbers! <br/> ${playerOne} it's your turn!`);
+    } else {
+      tableSize = parseInt($('#playerName').val());
+      $('#setPlayers p').html(`${playerOne} it's your turn!`);
+    }
+  } //requestBoardSize()
+
+
   //---Set Board Size---
   const setBoardSize = function() {
     $gridContainer = $('.gridContainer');
@@ -18,7 +33,7 @@ let tableSize = 5;
       }
     }
     $('.checkSquares').css('font-size', `${$('.checkSquares').height() * 0.7}px`);
-  }
+  } //setBoardSize()
 
   //---Check Victory Conditions---
   const victory = function() {
@@ -40,7 +55,7 @@ let tableSize = 5;
       } else {
         correctCount = 1;
       }
-    };
+    }
 
     //check columns
     for(let i = 1; i < tableSize + 1; i++) {
@@ -89,13 +104,15 @@ let tableSize = 5;
     } else {
       correctCount = 1;
     }
-  }//victory()
+  } //victory()
 
 
 
   // ---Set Names---
   $('#playerButton').on('click', function() {
-    if(stateCount === 0) {
+    if($('#playerName').val() === '') {
+      return;
+    } else if(stateCount === 0) {
       playerOne = $('#playerName').val();
       $('#playerName').val('');
       $('#setPlayers p').html('Player 2 - Enter your name');
@@ -103,12 +120,11 @@ let tableSize = 5;
     } else if(stateCount === 1) {
       playerTwo = $('#playerName').val();
       $('#playerName').val('');
-      $('#setPlayers p').html('Enter a board size, odd numbers only!');   //!!!Add check for odd number
+      $('#setPlayers p').html('Enter a board size, odd numbers only!');
       stateCount++;
     } else {
-      tableSize = parseInt($('#playerName').val());
+      requestBoardSize();
       setBoardSize();
-      $('#setPlayers p').html(`${playerOne} it's your turn!`);
       $('#setPlayers input').hide();
     }
   });
