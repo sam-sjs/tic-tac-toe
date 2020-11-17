@@ -7,8 +7,21 @@ let stateCount = 0;
 let tableSize = 3;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
 
+//---Set Board Size---
+//Add divs to HTML and set IDs to coordinates
+//Update grid container css
+//Add font scaling inside squares
+//Add request for tableSize
+//Set tableSize variable
+
+
+
+
+
+
 //---Check Victory Conditions---
 const victory = function() {
+
   let inARow = [];
   let correctCount = 1;
   //check rows
@@ -25,8 +38,9 @@ const victory = function() {
       return console.log('Victory!');
     } else {
       correctCount = 1;
-    };
+    }
   };
+
   //check columns
   for(let i = 1; i < tableSize + 1; i++) {
     for(let j = 1; j < tableSize + 1; j++) {
@@ -41,9 +55,11 @@ const victory = function() {
       return console.log('Victory!');
     } else {
       correctCount = 1;
-    };
+    }
   };
+
   //check diagonals
+  //top left => bottom right
   for(let i = 1; i < tableSize + 1; i++) {
     const cellValue = $('#' + i + '_' + i).html();
     inARow.push(cellValue);
@@ -56,7 +72,9 @@ const victory = function() {
     return console.log('Victory!');
   } else {
     correctCount = 1;
-  };
+  }
+
+  //top right => bottom left
   for(let i = 1; i < tableSize + 1; i++) {
     const cellValue = $('#' + (tableSize - i + 1) + '_' + i).html();
     inARow.push(cellValue);
@@ -64,11 +82,12 @@ const victory = function() {
       correctCount++;
     };
   };
+  inARow = [];
   if(correctCount === tableSize) {
     return console.log('Victory!');
   } else {
     correctCount = 1;
-  };
+  }
 }//victory()
 
 
@@ -90,7 +109,9 @@ $('#playerButton').on('click', function() {
 
 //---Play Turns---
 $('div.checkSquares').on('click', function() {
-  if(stateCount % 2 === 0) {
+  if($(this).html() !== "") {
+    return;
+  } else if(stateCount % 2 === 0) {
     $(this).html('X');
     stateCount++
     victory();

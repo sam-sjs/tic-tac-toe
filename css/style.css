@@ -8,7 +8,6 @@ body {
   text-align: center;
   width: 100vw;
   height: 100vh;
-  border: 1px solid red;
 }
 
 .gridContainer {
@@ -32,4 +31,8 @@ body {
   font-family: 'Comic Neue', cursive;
   font-weight: bold;
   cursor: pointer;
+}
+
+#setPlayers p {
+  font-size: 3em;
 }
