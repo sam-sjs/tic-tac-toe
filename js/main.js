@@ -4,28 +4,24 @@ let playerOne = "";
 let playerTwo = "";
 
 let stateCount = 0;
-let tableSize = 3;
+let tableSize = 5;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
 
   //---Set Board Size---
-  //Add divs to HTML and set IDs to coordinates
   //Update grid container css
   //Add font scaling inside squares
   //Add request for tableSize
   //Set tableSize variable
   const setBoardSize = function() {
-    // debugger;
+    $gridContainer = $('.gridContainer');
+    $gridContainer.css({gridTemplateRows: `repeat(${tableSize}, 1fr);`, gridTemplateColumns: `repeat(${tableSize}, 1fr);`});
     for(let i = 1; i <= tableSize; i++) {
       for(let j = 1; j <= tableSize; j++) {
         const $newDiv = $(`<div id="${i}_${j}" class="checkSquares"></div>`)
-        $('.gridContainer').append($newDiv);
+        $gridContainer.append($newDiv);
       }
     }
   }
-
-
-
-
 
   //---Check Victory Conditions---
   const victory = function() {
@@ -109,7 +105,11 @@ let tableSize = 3;
       stateCount++;
     } else if(stateCount === 1) {
       playerTwo = $('#playerName').val();
+      $('#playerName').val('');
+      $('#setPlayers p').html('Enter a board size, odd numbers only!');   //!!!Add check for odd number
       stateCount++;
+    } else {
+      tableSize = parseInt($('#playerName').val());
       $('#setPlayers p').html(`${playerOne} it's your turn!`);
       $('#setPlayers input').hide();
     }
