@@ -20,6 +20,7 @@ body {
   background-color: darkgrey;
   color: white;
   border: 5px solid black;
+  box-sizing: border-box;
 }
 
 .gridSquares {
@@ -35,4 +36,27 @@ body {
 
 #playerIO p {
   font-size: 3em;
+  margin: 20px;
+}
+
+.playerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  width: 600px;
+  margin: 0 auto;
+}
+
+.playerItems {
+  height: 50px;
+  font-size: 2em;
+}
+
+#playerOne {
+  color: red;
+}
+
+#playerTwo {
+  color: blue;
 }

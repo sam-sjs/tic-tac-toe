@@ -16,13 +16,13 @@ let tableSize = 5;
     const $playerInput = parseInt($textInput.val());
     if($playerInput > 21 || $playerInput < 3) {
       tableSize = $playerInput < 3 ? 3 : 21;
-      $outputField.html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn!`);
+      $outputField.html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn`);
     } else if($playerInput % 2 === 0) {
       tableSize = $playerInput + 1;
-      $outputField.html(`I said odd numbers! <br/> ${playerOne} it's your turn!`);
+      $outputField.html(`I said odd numbers! <br/> ${playerOne} it's your turn`);
     } else {
       tableSize = $playerInput;
-      $outputField.html(`${playerOne} it's your turn!`);
+      $outputField.html(`${playerOne} it's your turn`);
     }
   } //requestBoardSize()
 
@@ -128,11 +128,13 @@ let tableSize = 5;
     } else if(stateCount === 0) {
       playerOne = $textInput.val();
       $textInput.val('');
+      $('#playerOne').html(playerOne);
       $outputField.html('Player 2 - Enter your name');
       stateCount++;
     } else if(stateCount === 1) {
       playerTwo = $textInput.val();
       $textInput.val('');
+      $('#playerTwo').html(playerTwo);
       $outputField.html('Enter a board size, odd numbers only!');
       stateCount++;
     } else {
@@ -147,15 +149,15 @@ let tableSize = 5;
     if($(this).html() !== "") {
       return;
     } else if(stateCount % 2 === 0) {
-      $(this).html('X');
+      $(this).html('X').css('color', 'red');
       stateCount++
       victory();
-      $outputField.html(`${playerTwo} it's your turn!`);
+      $outputField.html(`${playerTwo} it's your turn`);
     } else {
-      $(this).html('O');
+      $(this).html('O').css('color', 'blue');
       stateCount++
       victory();
-      $outputField.html(`${playerOne} it's your turn!`);
+      $outputField.html(`${playerOne} it's your turn`);
     }
   });
 
