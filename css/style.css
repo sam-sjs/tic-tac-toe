@@ -33,6 +33,6 @@ body {
   cursor: pointer;
 }
 
-#setPlayers p {
+#playerIO p {
   font-size: 3em;
 }

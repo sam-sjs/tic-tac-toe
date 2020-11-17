@@ -9,15 +9,15 @@ let tableSize = 5;
 
   //---Request Board Size---
   const requestBoardSize = function() {
-    if(parseInt($('#playerName').val()) > 21 || parseInt($('#playerName').val()) < 3) {
-      tableSize = parseInt($('#playerName').val()) < 3 ? 3 : 21;
-      $('#setPlayers p').html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn!`);
-    } else if(parseInt($('#playerName').val()) % 2 === 0) {
-      tableSize = parseInt($('#playerName').val()) + 1;
-      $('#setPlayers p').html(`I said odd numbers! <br/> ${playerOne} it's your turn!`);
+    if(parseInt($('#textInput').val()) > 21 || parseInt($('#textInput').val()) < 3) {
+      tableSize = parseInt($('#textInput').val()) < 3 ? 3 : 21;
+      $('#playerIO p').html(`Table size must be between 3 and 21! <br/> ${playerOne} it's your turn!`);
+    } else if(parseInt($('#textInput').val()) % 2 === 0) {
+      tableSize = parseInt($('#textInput').val()) + 1;
+      $('#playerIO p').html(`I said odd numbers! <br/> ${playerOne} it's your turn!`);
     } else {
-      tableSize = parseInt($('#playerName').val());
-      $('#setPlayers p').html(`${playerOne} it's your turn!`);
+      tableSize = parseInt($('#textInput').val());
+      $('#playerIO p').html(`${playerOne} it's your turn!`);
     }
   } //requestBoardSize()
 
@@ -109,29 +109,29 @@ let tableSize = 5;
 
 
   // ---Set Names---
-  $('#playerName').keyup(function(e) {
+  $('#textInput').keyup(function(e) {
     if(e.keyCode === 13) {
-      $('#playerButton').trigger('click');
+      $('#submitButton').trigger('click');
     }
   });
 
-  $('#playerButton').on('click', function() {
-    if($('#playerName').val() === '') {
+  $('#submitButton').on('click', function() {
+    if($('#textInput').val() === '') {
       return;
     } else if(stateCount === 0) {
-      playerOne = $('#playerName').val();
-      $('#playerName').val('');
-      $('#setPlayers p').html('Player 2 - Enter your name');
+      playerOne = $('#textInput').val();
+      $('#textInput').val('');
+      $('#playerIO p').html('Player 2 - Enter your name');
       stateCount++;
     } else if(stateCount === 1) {
-      playerTwo = $('#playerName').val();
-      $('#playerName').val('');
-      $('#setPlayers p').html('Enter a board size, odd numbers only!');
+      playerTwo = $('#textInput').val();
+      $('#textInput').val('');
+      $('#playerIO p').html('Enter a board size, odd numbers only!');
       stateCount++;
     } else {
       requestBoardSize();
       setBoardSize();
-      $('#setPlayers input').hide();
+      $('#playerIO input').hide();
     }
   });
 
@@ -143,12 +143,12 @@ let tableSize = 5;
       $(this).html('X');
       stateCount++
       victory();
-      $('#setPlayers p').html(`${playerTwo} it's your turn!`);
+      $('#playerIO p').html(`${playerTwo} it's your turn!`);
     } else {
       $(this).html('O');
       stateCount++
       victory();
-      $('#setPlayers p').html(`${playerOne} it's your turn!`);
+      $('#playerIO p').html(`${playerOne} it's your turn!`);
     }
   });
 
