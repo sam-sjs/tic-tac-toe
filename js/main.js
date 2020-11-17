@@ -109,6 +109,12 @@ let tableSize = 5;
 
 
   // ---Set Names---
+  $('#playerName').keyup(function(e) {
+    if(e.keyCode === 13) {
+      $('#playerButton').trigger('click');
+    }
+  });
+
   $('#playerButton').on('click', function() {
     if($('#playerName').val() === '') {
       return;
