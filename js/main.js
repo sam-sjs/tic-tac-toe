@@ -8,19 +8,16 @@ let tableSize = 5;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
 
   //---Set Board Size---
-  //Update grid container css
-  //Add font scaling inside squares
-  //Add request for tableSize
-  //Set tableSize variable
   const setBoardSize = function() {
     $gridContainer = $('.gridContainer');
-    $gridContainer.css({gridTemplateRows: `repeat(${tableSize}, 1fr);`, gridTemplateColumns: `repeat(${tableSize}, 1fr);`});
+    $gridContainer.css({gridTemplateRows: `repeat(${tableSize}, 1fr)`, gridTemplateColumns: `repeat(${tableSize}, 1fr)`});
     for(let i = 1; i <= tableSize; i++) {
       for(let j = 1; j <= tableSize; j++) {
         const $newDiv = $(`<div id="${i}_${j}" class="checkSquares"></div>`)
         $gridContainer.append($newDiv);
       }
     }
+    $('.checkSquares').css('font-size', `${$('.checkSquares').height() * 0.7}px`);
   }
 
   //---Check Victory Conditions---
@@ -110,13 +107,14 @@ let tableSize = 5;
       stateCount++;
     } else {
       tableSize = parseInt($('#playerName').val());
+      setBoardSize();
       $('#setPlayers p').html(`${playerOne} it's your turn!`);
       $('#setPlayers input').hide();
     }
   });
 
   //---Play Turns---
-  $('div.checkSquares').on('click', function() {
+  $('.gridContainer').on('click', '.checkSquares', function() {
     if($(this).html() !== "") {
       return;
     } else if(stateCount % 2 === 0) {
