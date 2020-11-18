@@ -1,12 +1,14 @@
 console.log('Let\'s play!');
 
-let playerOne = "";  // can I make any of these local?  Maybe add the code at the bottom into functions?
-let playerTwo = "";  // maybe make an object?
+let playerOne = '';  // can I make any of these local?  Maybe add the code at the bottom into functions?
+let playerTwo = '';  // maybe make an object?
+
 let pOneScore = 0;
 let pTwoScore = 0;
 
 let stateCount = 0;
 let tableSize = 5;
+let roundCount = 1;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
   const $outputField = $('#playerIO p');
   const $gridContainer = $('.gridContainer');
@@ -24,7 +26,7 @@ let tableSize = 5;
     } else {
       tableSize = $playerInput;
       $outputField.html(`${playerOne} it's your turn`);
-    }
+    };
   } //requestBoardSize()
 
 
@@ -35,7 +37,7 @@ let tableSize = 5;
       for(let j = 1; j <= tableSize; j++) {
         const $newDiv = $(`<div id="${i}_${j}" class="gridSquares"></div>`);
         $gridContainer.append($newDiv);
-      }
+      };
     };
     $('.gridSquares').css('font-size', `${$('.gridSquares').height() * 0.7}px`);
   } //setBoardSize()
@@ -54,8 +56,7 @@ let tableSize = 5;
       const endGame = function() {
         const $score = $('#score');
         $score.html(`${pOneScore} - ${pTwoScore}`);
-        $('#playAgain').show();
-        $('#resetGame').show();
+        $('.endButtons').show();
       } //endGame()
 
       inARow = [];
@@ -154,6 +155,7 @@ let tableSize = 5;
     } else {
       requestBoardSize();
       setBoardSize();
+      $textInput.val('');
       $('.startButtons').hide();
     };
   } //gameSetup()
@@ -176,6 +178,45 @@ let tableSize = 5;
   } //playTurns()
 
 
+  //---Play Again---
+  const playAgain = function() {
+    roundCount++;
+    for(let i = 1; i <= tableSize; i++) {
+      for(let j = 1; j <= tableSize; j++) {
+        $(`#${i}_${j}`).html('');
+      }
+    };
+    if(roundCount % 2 === 0) {
+      stateCount = 3;
+      $outputField.html(`${playerTwo} it's your turn`);
+    } else {
+      stateCount = 2;
+      $outputField.html(`${playerOne} it's your turn`);
+    }
+    $('.endButtons').hide();
+  } //playAgain()
+
+
+  //---Reset Game---
+  const resetGame = function() {
+    for(let i = 1; i <= tableSize; i++) {
+      for(let j = 1; j <= tableSize; j++) {
+        $(`#${i}_${j}`).remove();
+      }
+    };
+    stateCount = 0
+    roundCount = 1
+    playerOne = '';
+    playerTwo = '';
+    pOneScore = 0;
+    pTwoScore = 0;
+    $('#score').html('0 - 0');
+    $outputField.html('Player 1 - Enter your name');
+    $('.endButtons').hide();
+    $('.startButtons').show();
+  } //resetGame()
+
+
   //---Event Listeners---
   $submitButton = $('#submitButton');
   $textInput.keyup(function(e) {
@@ -188,9 +229,9 @@ let tableSize = 5;
 
   $gridContainer.on('click', '.gridSquares', playTurns);
 
+  $('#playAgain').on('click', playAgain);
 
-
-
+  $('#resetGame').on('click', resetGame);
 
 
 // }); //end of $(document).ready() handler
