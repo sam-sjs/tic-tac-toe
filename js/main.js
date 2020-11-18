@@ -34,7 +34,7 @@ let tableSize = 5;
     $gridContainer.css({gridTemplateRows: `repeat(${tableSize}, 1fr)`, gridTemplateColumns: `repeat(${tableSize}, 1fr)`});
     for(let i = 1; i <= tableSize; i++) {
       for(let j = 1; j <= tableSize; j++) {
-        const $newDiv = $(`<div id="${i}_${j}" class="gridSquares"></div>`)
+        const $newDiv = $(`<div id="${i}_${j}" class="gridSquares"></div>`);
         $gridContainer.append($newDiv);
       }
     };
@@ -54,17 +54,20 @@ let tableSize = 5;
         if(correctCount === tableSize) {
           if(stateCount % 2 !== 0) {
             $outputField.html(`${playerOne} is Victorious!`);
+            pOneScore++;
             return 1;
           } else {
             $outputField.html(`${playerTwo} is Victorious!`);
+            pTwoScore++;
             return 1;
-          }
+          };
         } else if(Math.pow(tableSize, 2) === stateCount - 2) {
           $outputField.html('You\'re both losers!');
           return 1;
         } else {
           correctCount = 1;
-        }
+        };
+        $('#score').html(`${pOneScore} - ${pTwoScore}`);
       } //displayVictory()
 
     //check rows
@@ -122,15 +125,8 @@ let tableSize = 5;
   } //victory()
 
 
-  // ---Set Names---
-  $submitButton = $('#submitButton');
-  $textInput.keyup(function(e) {
-    if(e.keyCode === 13) {
-      $submitButton.trigger('click');
-    }
-  });
-
-  $submitButton.on('click', function() {
+  // ---Game Setup---
+  const gameSetup = function() {
     if($textInput.val() === '') {
       return;
     } else if(stateCount === 0) {
@@ -149,12 +145,12 @@ let tableSize = 5;
       requestBoardSize();
       setBoardSize();
       $('#playerIO input').hide();
-    }
-  });
+    };
+  }
 
 
   //---Play Turns---
-  $gridContainer.on('click', '.gridSquares', function() {
+  const playTurns = function() {
     if($(this).html() !== "") {
       return;
     } else if(stateCount % 2 === 0) {
@@ -165,9 +161,22 @@ let tableSize = 5;
       $(this).html('O').css('color', 'blue');
       stateCount++
       $outputField.html(`${playerOne} it's your turn`);
-    }
+    };
     victory();
+  }
+
+
+  //---Event Listeners---
+  $submitButton = $('#submitButton');
+  $textInput.keyup(function(e) {
+    if(e.keyCode === 13) {
+      $submitButton.trigger('click');
+    };
   });
+
+  $submitButton.on('click', function() {gameSetup()});
+
+  $gridContainer.on('click', '.gridSquares', playTurns);
 
 
 
