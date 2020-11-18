@@ -1,7 +1,7 @@
 console.log('Let\'s play!');
 
-let playerOne = '';  // can I make any of these local?  Maybe add the code at the bottom into functions?
-let playerTwo = '';  // maybe make an object?
+let playerOne = '';
+let playerTwo = '';
 
 let pOneScore = 0;
 let pTwoScore = 0;
@@ -9,6 +9,9 @@ let pTwoScore = 0;
 let stateCount = 0;
 let tableSize = 5;
 let roundCount = 1;
+
+let correctCount = 1;
+
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
 
   const $outputField = $('#playerIO p');
@@ -48,44 +51,36 @@ let roundCount = 1;
   } //setBoardSize()
 
 
-  //---Check Victory Conditions---
-  const victory = function() {
+  //---Display Endgame Output---
+  const endGame = function() {
+    $score.html(`${pOneScore} - ${pTwoScore}`);
+    $endButtons.show();
+  } //endGame()
 
-    let correctCount = 1;
-    let inARow = [];
 
-    //---Display Victory---
-    const displayVictory = function() {
-
-      //---Display Endgame Output---
-      const endGame = function() {
-        $score.html(`${pOneScore} - ${pTwoScore}`);
-        $endButtons.show();
-      } //endGame()
-
-      inARow = [];
-      if(correctCount === tableSize) {
-        if(stateCount % 2 !== 0) {
-          $outputField.html(`${playerOne} is Victorious!`);
-          pOneScore++;
-          endGame();
-          return 1;
-        } else {
-          $outputField.html(`${playerTwo} is Victorious!`);
-          pTwoScore++;
-          endGame();
-          return 1;
-        };
-      } else if(Math.pow(tableSize, 2) === stateCount - 2) {
-        $outputField.html('You\'re both losers!');
+  //---Display Victory---
+  const displayVictory = function() {
+    if(correctCount === tableSize) {
+      if(stateCount % 2 !== 0) {
+        $outputField.html(`${playerOne} is Victorious!`);
+        pOneScore++;
         endGame();
-        return 1;
       } else {
-        correctCount = 1;
+        $outputField.html(`${playerTwo} is Victorious!`);
+        pTwoScore++;
+        endGame();
       };
-    } //displayVictory()
+    } else if(Math.pow(tableSize, 2) === stateCount - 2) {
+      $outputField.html('You\'re both losers!');
+      endGame();
+    }
+    correctCount = 1;
+  } //displayVictory()
 
-    //check rows
+
+  //---Scan Rows For Matches---
+  const rowScan = function() {
+    let inARow = [];
     for(let i = 1; i < tableSize + 1; i++) {
       for(let j = 1; j < tableSize + 1; j++) {
         const cellValue = $('#' + i + '_' + j).html();
@@ -94,12 +89,14 @@ let roundCount = 1;
           correctCount++;
         };
       };
-      if(displayVictory() === 1) {
-        return;
-      };
-    }
+      inARow = [];
+      displayVictory()
+    };
+  } //rowScan()
 
-    //check columns
+  //---Scan Columns For Matches---
+  const columnScan = function() {
+    let inARow = [];
     for(let i = 1; i < tableSize + 1; i++) {
       for(let j = 1; j < tableSize + 1; j++) {
         const cellValue = $('#' + j + '_' + i).html();
@@ -108,13 +105,14 @@ let roundCount = 1;
           correctCount++;
         };
       };
-      if(displayVictory() === 1) {
-        return;
-      };
+      inARow = [];
+      displayVictory()
     };
+  }
 
-    //check diagonals
-    //top left => bottom right
+  //---Check Top Left To Bottom Right Diagonal---
+  const diagonalOne = function() {
+    let inARow = [];
     for(let i = 1; i < tableSize + 1; i++) {
       const cellValue = $('#' + i + '_' + i).html();
       inARow.push(cellValue);
@@ -122,11 +120,13 @@ let roundCount = 1;
         correctCount++;
       };
     };
-    if(displayVictory() === 1) {
-      return;
-    };
+    inARow = [];
+    displayVictory()
+  }
 
-    //top right => bottom left
+  //---Check Top Right to Bottom Left Diagonal---
+  const diagonalTwo = function() {
+    let inARow = [];
     for(let i = 1; i < tableSize + 1; i++) {
       const cellValue = $('#' + (tableSize - i + 1) + '_' + i).html();
       inARow.push(cellValue);
@@ -134,9 +134,16 @@ let roundCount = 1;
         correctCount++;
       };
     };
-    if(displayVictory() === 1) {
-      return;
-    };
+    inARow = [];
+    displayVictory()
+  }
+
+  //---Check Victory Conditions---
+  const victory = function() {
+    rowScan();
+    columnScan();
+    diagonalOne();
+    diagonalTwo();
   } //victory()
 
 
@@ -224,7 +231,8 @@ let roundCount = 1;
     };
   });
 
-  $submitButton.on('click', function() {gameSetup()});
+  // $submitButton.on('click', function() {gameSetup()});
+  $submitButton.on('click', gameSetup);
 
   $gridContainer.on('click', '.gridSquares', playTurns);
 
