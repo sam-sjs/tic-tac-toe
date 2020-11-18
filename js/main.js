@@ -10,9 +10,14 @@ let stateCount = 0;
 let tableSize = 5;
 let roundCount = 1;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
+
   const $outputField = $('#playerIO p');
   const $gridContainer = $('.gridContainer');
   const $textInput = $('#textInput');
+  const $score = $('#score');
+  const $endButtons = $('.endButtons');
+  const $startButtons = $('.startButtons');
+
 
   //---Request Board Size---
   const requestBoardSize = function() {
@@ -54,9 +59,8 @@ let roundCount = 1;
 
       //---Display Endgame Output---
       const endGame = function() {
-        const $score = $('#score');
         $score.html(`${pOneScore} - ${pTwoScore}`);
-        $('.endButtons').show();
+        $endButtons.show();
       } //endGame()
 
       inARow = [];
@@ -156,7 +160,7 @@ let roundCount = 1;
       requestBoardSize();
       setBoardSize();
       $textInput.val('');
-      $('.startButtons').hide();
+      $startButtons.hide();
     };
   } //gameSetup()
 
@@ -193,7 +197,7 @@ let roundCount = 1;
       stateCount = 2;
       $outputField.html(`${playerOne} it's your turn`);
     }
-    $('.endButtons').hide();
+    $endButtons.hide();
   } //playAgain()
 
 
@@ -210,10 +214,10 @@ let roundCount = 1;
     playerTwo = '';
     pOneScore = 0;
     pTwoScore = 0;
-    $('#score').html('0 - 0');
+    $score.html('0 - 0');
     $outputField.html('Player 1 - Enter your name');
-    $('.endButtons').hide();
-    $('.startButtons').show();
+    $endButtons.hide();
+    $startButtons.show();
   } //resetGame()
 
 
