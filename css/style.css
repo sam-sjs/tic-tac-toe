@@ -50,15 +50,18 @@ body {
 
 .playerItems {
   height: 50px;
+  width: 250px;
   font-size: 2em;
 }
 
 #playerOne {
   color: red;
+  text-align: left;
 }
 
 #playerTwo {
   color: blue;
+  text-align: right;
 }
 
 .endButtons {

@@ -169,15 +169,16 @@ let roundCount = 1;
   const playTurns = function() {
     if($(this).html() !== "") {
       return;
-    } else if(stateCount % 2 === 0) {
+    }
+
+    if(stateCount % 2 === 0) {
       $(this).html('X').css('color', 'red');
-      stateCount++
       $outputField.html(`${playerTwo} it's your turn`);
     } else {
       $(this).html('O').css('color', 'blue');
-      stateCount++
       $outputField.html(`${playerOne} it's your turn`);
     };
+    stateCount++;
     victory();
   } //playTurns()
 
@@ -185,11 +186,7 @@ let roundCount = 1;
   //---Play Again---
   const playAgain = function() {
     roundCount++;
-    for(let i = 1; i <= tableSize; i++) {
-      for(let j = 1; j <= tableSize; j++) {
-        $(`#${i}_${j}`).html('');
-      }
-    };
+    $('.gridSquares').empty();
     if(roundCount % 2 === 0) {
       stateCount = 3;
       $outputField.html(`${playerTwo} it's your turn`);
@@ -203,11 +200,7 @@ let roundCount = 1;
 
   //---Reset Game---
   const resetGame = function() {
-    for(let i = 1; i <= tableSize; i++) {
-      for(let j = 1; j <= tableSize; j++) {
-        $(`#${i}_${j}`).remove();
-      }
-    };
+    $('.gridSquares').remove();
     stateCount = 0
     roundCount = 1
     playerOne = '';
@@ -215,6 +208,8 @@ let roundCount = 1;
     pOneScore = 0;
     pTwoScore = 0;
     $score.html('0 - 0');
+    $('#playerOne').html('Player One');
+    $('#playerTwo').html('Player Two');
     $outputField.html('Player 1 - Enter your name');
     $endButtons.hide();
     $startButtons.show();
