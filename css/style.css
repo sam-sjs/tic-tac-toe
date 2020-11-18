@@ -60,3 +60,16 @@ body {
 #playerTwo {
   color: blue;
 }
+
+.endButtons {
+  display: none;
+  background-color: lightgreen;
+  color: darkgreen;
+  font-size: 20pt;
+  cursor: pointer;
+}
+
+.endButtons:hover {
+  background-color: darkgreen;
+  color: lightgreen;
+}

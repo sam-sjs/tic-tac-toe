@@ -8,7 +8,6 @@ let pTwoScore = 0;
 let stateCount = 0;
 let tableSize = 5;
 // $(document).ready(function() {   -------JQUERY CODE BELOW HERE-------
-
   const $outputField = $('#playerIO p');
   const $gridContainer = $('.gridContainer');
   const $textInput = $('#textInput');
@@ -48,27 +47,38 @@ let tableSize = 5;
     let correctCount = 1;
     let inARow = [];
 
-      //---Display Victory---
-      const displayVictory = function() {
-        inARow = [];
-        if(correctCount === tableSize) {
-          if(stateCount % 2 !== 0) {
-            $outputField.html(`${playerOne} is Victorious!`);
-            pOneScore++;
-            return 1;
-          } else {
-            $outputField.html(`${playerTwo} is Victorious!`);
-            pTwoScore++;
-            return 1;
-          };
-        } else if(Math.pow(tableSize, 2) === stateCount - 2) {
-          $outputField.html('You\'re both losers!');
+    //---Display Victory---
+    const displayVictory = function() {
+
+      //---Display Endgame Output---
+      const endGame = function() {
+        const $score = $('#score');
+        $score.html(`${pOneScore} - ${pTwoScore}`);
+        $('#playAgain').show();
+        $('#resetGame').show();
+      } //endGame()
+
+      inARow = [];
+      if(correctCount === tableSize) {
+        if(stateCount % 2 !== 0) {
+          $outputField.html(`${playerOne} is Victorious!`);
+          pOneScore++;
+          endGame();
           return 1;
         } else {
-          correctCount = 1;
+          $outputField.html(`${playerTwo} is Victorious!`);
+          pTwoScore++;
+          endGame();
+          return 1;
         };
-        $('#score').html(`${pOneScore} - ${pTwoScore}`);
-      } //displayVictory()
+      } else if(Math.pow(tableSize, 2) === stateCount - 2) {
+        $outputField.html('You\'re both losers!');
+        endGame();
+        return 1;
+      } else {
+        correctCount = 1;
+      };
+    } //displayVictory()
 
     //check rows
     for(let i = 1; i < tableSize + 1; i++) {
@@ -144,9 +154,9 @@ let tableSize = 5;
     } else {
       requestBoardSize();
       setBoardSize();
-      $('#playerIO input').hide();
+      $('.startButtons').hide();
     };
-  }
+  } //gameSetup()
 
 
   //---Play Turns---
@@ -163,7 +173,7 @@ let tableSize = 5;
       $outputField.html(`${playerOne} it's your turn`);
     };
     victory();
-  }
+  } //playTurns()
 
 
   //---Event Listeners---
