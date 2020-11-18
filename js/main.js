@@ -1,7 +1,9 @@
 console.log('Let\'s play!');
 
-let playerOne = "";
-let playerTwo = "";
+let playerOne = "";  // can I make any of these local?  Maybe add the code at the bottom into functions?
+let playerTwo = "";  // maybe make an object?
+let pOneScore = 0;
+let pTwoScore = 0;
 
 let stateCount = 0;
 let tableSize = 5;
@@ -39,11 +41,31 @@ let tableSize = 5;
     $('.gridSquares').css('font-size', `${$('.gridSquares').height() * 0.7}px`);
   } //setBoardSize()
 
+
   //---Check Victory Conditions---
   const victory = function() {
 
-    let inARow = [];
     let correctCount = 1;
+    let inARow = [];
+
+      //---Display Victory---
+      const displayVictory = function() {
+        inARow = [];
+        if(correctCount === tableSize) {
+          if(stateCount % 2 !== 0) {
+            $outputField.html(`${playerOne} is Victorious!`);
+            return 1;
+          } else {
+            $outputField.html(`${playerTwo} is Victorious!`);
+            return 1;
+          }
+        } else if(Math.pow(tableSize, 2) === stateCount - 2) {
+          $outputField.html('You\'re both losers!');
+          return 1;
+        } else {
+          correctCount = 1;
+        }
+      } //displayVictory()
 
     //check rows
     for(let i = 1; i < tableSize + 1; i++) {
@@ -54,12 +76,9 @@ let tableSize = 5;
           correctCount++;
         };
       };
-      inARow = [];
-      if(correctCount === tableSize) {
-        return console.log('Victory!');
-      } else {
-        correctCount = 1;
-      }
+      if(displayVictory() === 1) {
+        return;
+      };
     }
 
     //check columns
@@ -71,12 +90,9 @@ let tableSize = 5;
           correctCount++;
         };
       };
-      inARow = [];
-      if(correctCount === tableSize) {
-        return console.log('Victory!');
-      } else {
-        correctCount = 1;
-      }
+      if(displayVictory() === 1) {
+        return;
+      };
     };
 
     //check diagonals
@@ -88,12 +104,9 @@ let tableSize = 5;
         correctCount++;
       };
     };
-    inARow = [];
-    if(correctCount === tableSize) {
-      return console.log('Victory!');
-    } else {
-      correctCount = 1;
-    }
+    if(displayVictory() === 1) {
+      return;
+    };
 
     //top right => bottom left
     for(let i = 1; i < tableSize + 1; i++) {
@@ -103,14 +116,10 @@ let tableSize = 5;
         correctCount++;
       };
     };
-    inARow = [];
-    if(correctCount === tableSize) {
-      return console.log('Victory!');
-    } else {
-      correctCount = 1;
-    }
+    if(displayVictory() === 1) {
+      return;
+    };
   } //victory()
-
 
 
   // ---Set Names---
@@ -143,6 +152,7 @@ let tableSize = 5;
     }
   });
 
+
   //---Play Turns---
   $gridContainer.on('click', '.gridSquares', function() {
     if($(this).html() !== "") {
@@ -150,14 +160,13 @@ let tableSize = 5;
     } else if(stateCount % 2 === 0) {
       $(this).html('X').css('color', 'red');
       stateCount++
-      victory();
       $outputField.html(`${playerTwo} it's your turn`);
     } else {
       $(this).html('O').css('color', 'blue');
       stateCount++
-      victory();
       $outputField.html(`${playerOne} it's your turn`);
     }
+    victory();
   });
 
 
