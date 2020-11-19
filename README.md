@@ -1,6 +1,6 @@
 # Tic-Tac-toe
 
-Play the game here!: https://ga-tic-tac-toe-4c8da.web.app/
+Play the game here!: [Play Tic-tac-toe!](https://ga-tic-tac-toe-4c8da.web.app/)
 
 ## About the game
 
@@ -19,7 +19,7 @@ The game supports custom board sizing up to 21 squares by 21 squares which is a 
 
 ## Known bugs
 
-* Game throws a draw one turn early every second game because apparently roundMod doesn't like to do as it's told
+* ~~Game throws a draw one turn early every second game because apparently roundMod doesn't like to do as it's told~~
 * Need to stop game being playable after winner/draw declared
 * Create room network feature stopped working - god knows why, I didn't even touch it
 
