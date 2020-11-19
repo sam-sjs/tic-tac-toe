@@ -28,14 +28,20 @@
       <p>Player 1 - Enter your name</p>
       <input id="textInput" class="startButtons" type="text">
       <input id="submitButton" class="startButtons" type="submit">
-      <input id="playAgain" class="endButtons" type="button" value="Play Again">
-      <input id="resetGame" class="endButtons" type="button" value="Reset Game">
-      <input id="local" class="gameSelect" type="button" value="Local Multiplayer">
-      <input id="network" class="gameSelect" type="button" value="Network Multiplayer">
-      <input id="computer" class="gameSelect" type="button" value="Play Computer">
-      <input id="create" class="networkButtons" type="button" value="Create">
-      <input id="join" class="networkButtons" type="button" value="Join">
+      <input id="playAgain" class="endButtons gameButtons" type="button" value="Play Again">
+      <input id="resetGame" class="endButtons gameButtons" type="button" value="Reset Game">
+      <input id="local" class="gameSelect gameButtons" type="button" value="Local Multiplayer">
+      <input id="network" class="gameSelect gameButtons" type="button" value="Network Multiplayer">
+      <input id="computer" class="gameSelect gameButtons" type="button" value="Play Computer">
+      <input id="create" class="networkButtons gameButtons" type="button" value="Create">
+      <input id="join" class="networkButtons gameButtons" type="button" value="Join">
       <!--Number of buttons can be reduced by doubling up, BUT NO TIME RIGHT NOW!-->
+    </div>
+
+    <div class="interactionContainer">
+      <div id="chatNames">
+      </div>
+      <div id="chatMessages"></div>
     </div>
 
   </div>

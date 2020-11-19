@@ -64,7 +64,7 @@ body {
   text-align: right;
 }
 
-.endButtons {
+.gameButtons {
   display: none;
   background-color: lightgreen;
   color: darkgreen;
@@ -72,33 +72,47 @@ body {
   cursor: pointer;
 }
 
-.endButtons:hover {
+.gameButtons:hover {
   background-color: darkgreen;
   color: lightgreen;
 }
 
-.gameSelect {
+.interactionContainer {
   display: none;
-  background-color: lightgreen;
-  color: darkgreen;
-  font-size: 20pt;
-  cursor: pointer;
+  box-sizing: border-box;
+  width: 800px;
+  height: 300px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgb(120, 120, 120);
+  opacity: 0.5;
+  margin: 0 auto;
 }
 
-.gameSelect:hover {
-  background-color: darkgreen;
-  color: lightgreen;
+#chatNames {
+  box-sizing: border-box;
+  width: 200px;
+  height: 300px;
+  border: 1px solid rgb(0, 0, 0);
+  opacity: 0.5;
 }
 
-.networkButtons {
-  display: none;
-  background-color: lightgreen;
-  color: darkgreen;
-  font-size: 20pt;
-  cursor: pointer;
+#chatMessages {
+  position: relative;
+  top: -300px;
+  left: 200px;
+  box-sizing: border-box;
+  width: 600px;
+  height: 260px;
+  border: 1px solid rgb(0, 0, 0);
+  opacity: 0.5;
 }
 
-.networkButtons:hover {
-  background-color: darkgreen;
-  color: lightgreen;
+#chatNames p {
+  color: black;
+  text-align: left;
+  margin: 0;
+  margin-top: 8px;
+  padding-left: 10px;
+  font-size: 18pt;
+  opacity: 1;
 }

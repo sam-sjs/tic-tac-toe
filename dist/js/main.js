@@ -7,8 +7,9 @@ let pOneScore = 0;
 let pTwoScore = 0;
 
 let stateCount = 0;
-let tableSize = 5;
+let tableSize = 0;
 let roundCount = 1;
+let roundMod = Math.round(roundCount % 2);
 
 let correctCount = 1;
 
@@ -70,7 +71,7 @@ let correctCount = 1;
         pTwoScore++;
         endGame();
       };
-    } else if(Math.pow(tableSize, 2) === stateCount - 2) {
+    } else if(Math.pow(tableSize, 2) === stateCount - roundMod - 1) {
       $outputField.html('You\'re both losers!');
       endGame();
     }
@@ -233,8 +234,8 @@ let correctCount = 1;
   //---Reset Game---
   const resetGame = function() {
     $('.gridSquares').remove();
-    stateCount = 0
-    roundCount = 1
+    stateCount = 0;
+    roundCount = 1;
     playerOne = '';
     playerTwo = '';
     pOneScore = 0;
