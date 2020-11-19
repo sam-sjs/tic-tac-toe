@@ -147,17 +147,34 @@ let correctCount = 1;
   } //victory()
 
 
-  // ---Game Setup---
-  const gameSetup = function() {
+  //---Game Select---
+  const gameSelect = function() {
     if($textInput.val() === '') {
       return;
-    } else if(stateCount === 0) {
-      playerOne = $textInput.val();
-      $textInput.val('');
+    };
+    if(stateCount > 0) {
+      gameSetup();
+      return;
+    }
+    playerOne = $textInput.val();
+    $textInput.val('');
+    $outputField.html('Choose game mode');
+    $startButtons.hide();
+    $('.gameSelect').show();
+    stateCount++;
+  } //gameSelect()
+
+
+
+  // ---Local Game Setup---
+  const gameSetup = function() {
+    if(stateCount === 1) {
+      $('.gameSelect').hide();
+      $startButtons.show();
       $('#playerOne').html(playerOne);
       $outputField.html('Player 2 - Enter your name');
-      stateCount++;
-    } else if(stateCount === 1) {
+      stateCount++
+    } else if(stateCount === 2) {
       playerTwo = $textInput.val();
       $textInput.val('');
       $('#playerTwo').html(playerTwo);
@@ -168,8 +185,17 @@ let correctCount = 1;
       setBoardSize();
       $textInput.val('');
       $startButtons.hide();
+      stateCount--;
     };
   } //gameSetup()
+
+
+  //---Network Game Setup---
+  const networkGame = function() {
+    $('.gameSelect').hide();
+    $('.networkButtons').show();
+    stateCount++;
+  } //networkGame()
 
 
   //---Play Turns---
@@ -177,7 +203,6 @@ let correctCount = 1;
     if($(this).html() !== "") {
       return;
     }
-
     if(stateCount % 2 === 0) {
       $(this).html('X').css('color', 'red');
       $outputField.html(`${playerTwo} it's your turn`);
@@ -232,7 +257,7 @@ let correctCount = 1;
   });
 
   // $submitButton.on('click', function() {gameSetup()});
-  $submitButton.on('click', gameSetup);
+  $submitButton.on('click', gameSelect);
 
   $gridContainer.on('click', '.gridSquares', playTurns);
 
@@ -240,5 +265,28 @@ let correctCount = 1;
 
   $('#resetGame').on('click', resetGame);
 
+  $('#local').on('click', gameSetup);
+
+  $('#network').on('click', networkGame);
+
+  $('#create').on('click', function() {
+    createGame(playerOne);
+  });
+
+  //====Firebase is crazy===
+  let database = firebase.database();
+
+  const createGame = function(name) {
+    let roomID = name + '\'s room';
+    database.ref('gameRooms/' + roomID).set({creator: playerOne});
+  }
+
+
+  const removeRoom = function(name) {
+    let roomID = name + '\'s room';
+    database.ref('gameRooms/' + roomID).remove();
+  }
 
 // }); //end of $(document).ready() handler
+//
+// $('#playerOne').html(playerOne);

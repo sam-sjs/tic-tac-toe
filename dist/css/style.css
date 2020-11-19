@@ -76,3 +76,29 @@ body {
   background-color: darkgreen;
   color: lightgreen;
 }
+
+.gameSelect {
+  display: none;
+  background-color: lightgreen;
+  color: darkgreen;
+  font-size: 20pt;
+  cursor: pointer;
+}
+
+.gameSelect:hover {
+  background-color: darkgreen;
+  color: lightgreen;
+}
+
+.networkButtons {
+  display: none;
+  background-color: lightgreen;
+  color: darkgreen;
+  font-size: 20pt;
+  cursor: pointer;
+}
+
+.networkButtons:hover {
+  background-color: darkgreen;
+  color: lightgreen;
+}
